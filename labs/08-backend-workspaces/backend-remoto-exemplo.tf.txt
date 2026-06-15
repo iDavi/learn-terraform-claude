@@ -1,0 +1,45 @@
+// EXEMPLO PARA LEITURA (não é aplicado — extensão .txt de propósito).
+// Reconheça cada argumento: isso cai na prova.
+
+// ---------- Backend S3 com state locking via DynamoDB ----------
+terraform {
+  backend "s3" {
+    bucket         = "minha-empresa-tfstate"   // bucket que guarda o state
+    key            = "prod/terraform.tfstate"  // caminho do state dentro do bucket
+    region         = "us-east-1"
+    dynamodb_table = "terraform-locks"         // tabela que faz o STATE LOCKING
+    encrypt        = true                      // criptografia em repouso
+  }
+}
+
+// O bloco backend NÃO aceita variáveis. Para valores dinâmicos,
+// deixe parcial e passe no init:
+//   terraform init -backend-config="bucket=meu-bucket" \
+//                  -backend-config="key=dev/terraform.tfstate"
+
+// ---------- Backend "remote" (Terraform Cloud / HCP) ----------
+terraform {
+  backend "remote" {
+    organization = "minha-org"
+    workspaces {
+      name = "app-prod"
+    }
+  }
+}
+
+// ---------- Sintaxe moderna equivalente (Terraform Cloud) ----------
+terraform {
+  cloud {
+    organization = "minha-org"
+    workspaces {
+      name = "app-prod"
+    }
+  }
+}
+
+// ---------- Backend local customizado ----------
+terraform {
+  backend "local" {
+    path = "estado/terraform.tfstate"
+  }
+}

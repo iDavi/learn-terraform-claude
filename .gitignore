@@ -1,0 +1,34 @@
+# Diretório de trabalho do Terraform (cache local, como node_modules) — NÃO versionar
+**/.terraform/
+
+# State e backups — podem conter segredos em texto plano — NUNCA versionar
+*.tfstate
+*.tfstate.*
+**/terraform.tfstate.d/
+
+# Arquivos gerados pelos labs durante o apply
+**/saida.txt
+**/notas.txt
+**/app.conf
+**/servico-*.conf
+**/deploy.log
+**/alpha.txt
+**/beta.txt
+**/resultado.json
+**/count-*.txt
+**/foreach-*.txt
+**/extra.txt
+**/dev-*.conf
+**/prod-*.conf
+**/ambiente.txt
+**/provisioner.log
+**/manual.txt
+**/entrada.txt
+**/relatorio.txt
+**/grafo.png
+
+# Crash logs
+crash.log
+crash.*.log
+
+# IMPORTANTE: .terraform.lock.hcl DEVE ser versionado — por isso NÃO está aqui.
